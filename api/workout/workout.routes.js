@@ -13,24 +13,24 @@ const router = express.Router();
 // @access Public
 router.get('/', getWorkouts);
 
+// @desc Add workout
+// @route POST /api/v1/workouts
+// @access Private
+router.post('/', addWorkout);
+
 // @desc Get single workout
-// @route GET /api/v1/workout/:id
+// @route GET /api/v1/workouts/:id
 // @access Public
 router.get('/:id', getWorkout);
 
-// @desc Add workout
-// @route POST /api/v1/workout
-// @access Public
-router.post('/', addWorkout);
-
 // @desc Update workout
-// @route PUT /api/v1/workout/:id
-// @access Public
+// @route PUT /api/v1/workouts/:id
+// @access Private
 router.put('/:id', updateWorkout);
 
 // @desc Delete workout
-// @route DELETE /api/v1/workout/:id
-// @access Public
+// @route DELETE /api/v1/workouts/:id
+// @access Private
 router.delete('/:id', deleteWorkout);
 
 module.exports = router;
