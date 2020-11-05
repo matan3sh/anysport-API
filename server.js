@@ -1,8 +1,9 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
-const colors = require('colors');
+const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
+const colors = require('colors');
 
 // Load env vars
 dotenv.config({ path: './config/config.env' });
@@ -22,6 +23,9 @@ if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 // Routes
 const workoutRoutes = require('./api/workout/workout.routes');
 app.use('/api/v1/workouts', workoutRoutes);
+
+// Custom ErrorHandler
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 const server = app.listen(

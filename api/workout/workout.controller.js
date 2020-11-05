@@ -1,55 +1,65 @@
+const ErrorResponse = require('../../utils/errorResponse');
 const Workout = require('./workout.model');
 
-getWorkouts = async (req, res) => {
+getWorkouts = async (req, res, next) => {
   try {
     const workouts = await Workout.find();
     res
       .status(200)
       .json({ success: true, count: workouts.length, data: workouts });
   } catch (error) {
-    res.status(400).json({ success: false });
+    next(error);
   }
 };
 
-getWorkout = async (req, res) => {
+getWorkout = async (req, res, next) => {
   try {
     const workout = await Workout.findById(req.params.id);
-    if (!workout) return res.status(400).json({ success: false });
+    if (!workout)
+      return next(
+        new ErrorResponse(`Workout not found with id of ${req.params.id}`, 404)
+      );
     res.status(200).json({ success: true, data: workout });
   } catch (error) {
-    res.status(400).json({ success: false });
+    next(error);
   }
 };
 
-addWorkout = async (req, res) => {
+addWorkout = async (req, res, next) => {
   try {
     const workout = await Workout.create(req.body);
     res.status(201).json({ success: true, data: workout });
   } catch (error) {
-    res.status(400).json({ success: false });
+    next(error);
   }
 };
 
-updateWorkout = async (req, res) => {
+updateWorkout = async (req, res, next) => {
   try {
     const workout = await Workout.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
-    if (!workout) return res.status(400).json({ success: false });
+    if (!workout)
+      return next(
+        new ErrorResponse(`Workout not found with id of ${req.params.id}`, 404)
+      );
     res.status(200).json({ success: true, data: workout });
   } catch (error) {
-    res.status(400).json({ success: false });
+    next(error);
   }
 };
 
-deleteWorkout = async (req, res) => {
+deleteWorkout = async (req, res, next) => {
   try {
     const workout = await Workout.findByIdAndDelete(req.params.id);
-    if (!workout) return res.status(400).json({ success: false });
+    if (!workout)
+      return next(
+        new ErrorResponse(`Workout not found with id of ${req.params.id}`, 404)
+      );
     res.status(200).json({ success: true, data: {} });
   } catch (error) {
-    res.status(400).json({ success: false });
+    next(error);
   }
 };
 
