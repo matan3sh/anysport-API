@@ -1,4 +1,5 @@
 const express = require('express');
+const asyncHandler = require('../../middleware/async');
 const {
   getWorkouts,
   getWorkout,
@@ -11,26 +12,26 @@ const router = express.Router();
 // @desc Get all workouts
 // @route GET /api/v1/workouts
 // @access Public
-router.get('/', getWorkouts);
+router.get('/', asyncHandler(getWorkouts));
 
 // @desc Add workout
 // @route POST /api/v1/workouts
 // @access Private
-router.post('/', addWorkout);
+router.post('/', asyncHandler(addWorkout));
 
 // @desc Get single workout
 // @route GET /api/v1/workouts/:id
 // @access Public
-router.get('/:id', getWorkout);
+router.get('/:id', asyncHandler(getWorkout));
 
 // @desc Update workout
 // @route PUT /api/v1/workouts/:id
 // @access Private
-router.put('/:id', updateWorkout);
+router.put('/:id', asyncHandler(updateWorkout));
 
 // @desc Delete workout
 // @route DELETE /api/v1/workouts/:id
 // @access Private
-router.delete('/:id', deleteWorkout);
+router.delete('/:id', asyncHandler(deleteWorkout));
 
 module.exports = router;
