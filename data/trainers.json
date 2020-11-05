@@ -1,30 +1,20 @@
 [
   {
-    "name": "40min in the park",
+    "name": "Dina Fitness",
     "description": "Fun workout in 40min duration, good vibes.",
     "website": "http://www.gymshark.com",
     "phone": "+972526740710",
     "email": "matan3sh@gmail.com",
     "address": "Park Hayarkon, Tel Aviv, ISR",
-    "types": ["Cardio", "Functional"],
-    "date": "2020-12-26",
-    "duration": 40,
-    "from": "18:00",
-    "to": "18:40",
-    "level": "Beginner"
+    "types": ["Cardio", "Functional"]
   },
   {
-    "name": "Stay fit with John",
+    "name": "Trainer4Life",
     "description": "Hard weight workout, keep motivation up and high.",
     "website": "http://www.sport5.com",
     "phone": "+972526740710",
     "email": "john@gmail.com",
-    "address": "Golda, Tel Aviv, ISR",
-    "types": ["Weight", "Crossfit"],
-    "date": "2020-12-01",
-    "duration": 45,
-    "from": "17:00",
-    "to": "17:45",
-    "level": "Intermediate"
+    "address": "Hadar Yosef 12, Tel Aviv, ISR",
+    "types": ["Weight", "Crossfit"]
   }
 ]

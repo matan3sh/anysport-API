@@ -21,8 +21,8 @@ connectDB();
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
 // Routes
-const workoutRoutes = require('./api/workout/workout.routes');
-app.use('/api/v1/workouts', workoutRoutes);
+const trainersRoutes = require('./api/trainer/trainer.routes');
+app.use('/api/v1/trainers', trainersRoutes);
 
 // Custom ErrorHandler
 app.use(errorHandler);

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
+const geocoder = require('../../utils/geocoder');
 
-const WorkoutSchema = new mongoose.Schema(
+const TrainerSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -70,26 +72,26 @@ const WorkoutSchema = new mongoose.Schema(
         'Zumba',
       ],
     },
-    date: {
-      type: Date,
-      required: [true, 'Please add a workout date'],
-    },
-    duration: {
-      type: Number,
-      required: [true, 'Please add a workout duration in minutes'],
-    },
-    from: {
-      type: String,
-      required: [true, 'Please add a workout start hour'],
-    },
-    to: {
-      type: String,
-      required: [true, 'Please add a workout end hour'],
-    },
-    level: {
-      type: String,
-      required: [true, 'Please add workout level'],
-    },
+    // date: {
+    //   type: Date,
+    //   required: [true, 'Please add a workout date'],
+    // },
+    // duration: {
+    //   type: Number,
+    //   required: [true, 'Please add a workout duration in minutes'],
+    // },
+    // from: {
+    //   type: String,
+    //   required: [true, 'Please add a workout start hour'],
+    // },
+    // to: {
+    //   type: String,
+    //   required: [true, 'Please add a workout end hour'],
+    // },
+    // level: {
+    //   type: String,
+    //   required: [true, 'Please add workout level'],
+    // },
     averageRating: {
       type: Number,
       min: [1, 'Rating must be at least 1'],
@@ -111,4 +113,28 @@ const WorkoutSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('Workout', WorkoutSchema);
+// Create workout slug from the name
+TrainerSchema.pre('save', function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+// Geocode & create location field
+TrainerSchema.pre('save', async function (next) {
+  const loc = await geocoder.geocode(this.address);
+  this.location = {
+    type: 'Point',
+    coordinates: [loc[0].longitude, loc[0].latitude],
+    formattedAddress: loc[0].formattedAddress,
+    street: loc[0].streetName,
+    city: loc[0].city,
+    state: loc[0].stateCode || loc[0].country,
+    zipcode: loc[0].zipcode,
+    country: loc[0].countryCode,
+  };
+  // Do not save address in DB
+  this.address = undefined;
+  next();
+});
+
+module.exports = mongoose.model('Trainer', TrainerSchema);
