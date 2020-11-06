@@ -16,5 +16,14 @@
     "email": "john@gmail.com",
     "address": "Hadar Yosef 12, Tel Aviv, ISR",
     "types": ["Weight", "Crossfit"]
+  },
+  {
+    "name": "How to Beast",
+    "description": "Hard weight workout, keep motivation up and high.",
+    "website": "http://www.howtobeast.com",
+    "phone": "+972526740710",
+    "email": "howtobeast@gmail.com",
+    "address": "233 Bay State Rd Boston MA 02215",
+    "types": ["Zumba", "Kickboxing"]
   }
 ]

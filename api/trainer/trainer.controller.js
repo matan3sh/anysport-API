@@ -1,4 +1,5 @@
 const ErrorResponse = require('../../utils/errorResponse');
+const geocoder = require('../../utils/geocoder');
 const Trainer = require('./trainer.model');
 
 getTrainers = async (req, res, next) => {
@@ -43,10 +44,28 @@ deleteTrainer = async (req, res, next) => {
   res.status(200).json({ success: true, data: {} });
 };
 
+getTrainersInRadius = async (req, res, next) => {
+  const { zipcode, distance } = req.params;
+  const loc = await geocoder.geocode(zipcode);
+  const lat = loc[0].latitude;
+  const lng = loc[0].longitude;
+
+  // Earth Radius = 3,963 mi / 6,378 km
+  const radius = distance / 6378;
+  const trainers = await Trainer.find({
+    location: { $geoWithin: { $centerSphere: [[lng, lat], radius] } },
+  });
+
+  res
+    .status(200)
+    .json({ success: true, count: trainers.length, data: trainers });
+};
+
 module.exports = {
   getTrainers,
   getTrainer,
   addTrainer,
   updateTrainer,
   deleteTrainer,
+  getTrainersInRadius,
 };

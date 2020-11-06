@@ -6,6 +6,7 @@ const {
   addTrainer,
   updateTrainer,
   deleteTrainer,
+  getTrainersInRadius,
 } = require('./trainer.controller');
 const router = express.Router();
 
@@ -33,5 +34,10 @@ router.put('/:id', asyncHandler(updateTrainer));
 // @route DELETE /api/v1/trainers/:id
 // @access Private
 router.delete('/:id', asyncHandler(deleteTrainer));
+
+// @desc Get trainers within a radius
+// @route GET /api/v1/trainers/radius/:zipcode/:distance
+// @access Private
+router.get('/radius/:zipcode/:distance', asyncHandler(getTrainersInRadius));
 
 module.exports = router;
