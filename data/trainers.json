@@ -6,7 +6,8 @@
     "phone": "+972526740710",
     "email": "matan3sh@gmail.com",
     "address": "Park Hayarkon, Tel Aviv, ISR",
-    "types": ["Cardio", "Functional"]
+    "types": ["Cardio", "Functional"],
+    "averageCost": 10000
   },
   {
     "name": "Trainer4Life",
@@ -15,7 +16,8 @@
     "phone": "+972526740710",
     "email": "john@gmail.com",
     "address": "Hadar Yosef 12, Tel Aviv, ISR",
-    "types": ["Weight", "Crossfit"]
+    "types": ["Weight", "Crossfit"],
+    "averageCost": 12000
   },
   {
     "name": "How to Beast",
@@ -24,6 +26,7 @@
     "phone": "+972526740710",
     "email": "howtobeast@gmail.com",
     "address": "233 Bay State Rd Boston MA 02215",
-    "types": ["Zumba", "Kickboxing"]
+    "types": ["Zumba", "Kickboxing"],
+    "averageCost": 8000
   }
 ]
