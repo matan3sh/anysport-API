@@ -5,7 +5,11 @@ getWorkouts = async (req, res, next) => {
   let query;
   if (req.params.trainerId)
     query = Workout.find({ trainer: req.params.trainerId });
-  else query = Workout.find();
+  else
+    query = Workout.find().populate({
+      path: 'trainer',
+      select: 'name description',
+    });
   const workouts = await query;
   if (!workouts.length)
     return next(

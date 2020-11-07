@@ -22,7 +22,7 @@ getTrainers = async (req, res, next) => {
   );
 
   // Finiding resource
-  let query = Trainer.find(JSON.parse(queryStr));
+  let query = Trainer.find(JSON.parse(queryStr)).populate('workouts');
 
   // Select fields
   if (req.query.select) {
@@ -87,11 +87,12 @@ updateTrainer = async (req, res, next) => {
 };
 
 deleteTrainer = async (req, res, next) => {
-  const trainer = await Trainer.findByIdAndDelete(req.params.id);
+  const trainer = await Trainer.findById(req.params.id);
   if (!trainer)
     return next(
       new ErrorResponse(`Trainer not found with id of ${req.params.id}`, 404)
     );
+  trainer.remove();
   res.status(200).json({ success: true, data: {} });
 };
 

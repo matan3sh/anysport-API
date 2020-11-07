@@ -72,26 +72,6 @@ const TrainerSchema = new mongoose.Schema(
         'Zumba',
       ],
     },
-    // date: {
-    //   type: Date,
-    //   required: [true, 'Please add a workout date'],
-    // },
-    // duration: {
-    //   type: Number,
-    //   required: [true, 'Please add a workout duration in minutes'],
-    // },
-    // from: {
-    //   type: String,
-    //   required: [true, 'Please add a workout start hour'],
-    // },
-    // to: {
-    //   type: String,
-    //   required: [true, 'Please add a workout end hour'],
-    // },
-    // level: {
-    //   type: String,
-    //   required: [true, 'Please add workout level'],
-    // },
     averageRating: {
       type: Number,
       min: [1, 'Rating must be at least 1'],
@@ -107,6 +87,10 @@ const TrainerSchema = new mongoose.Schema(
     //   ref: 'User',
     //   required: true,
     // },
+  },
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   },
   {
     timestamps: true,
@@ -135,6 +119,21 @@ TrainerSchema.pre('save', async function (next) {
   // Do not save address in DB
   this.address = undefined;
   next();
+});
+
+// Cascade delete courses when a bootcamp is deleted
+TrainerSchema.pre('remove', async function (next) {
+  console.log(`Workouts beign removed from trainer ${this._id}`);
+  await this.model('Workout').deleteMany({ trainer: this._id });
+  next();
+});
+
+// Reverse populate with virtuals
+TrainerSchema.virtual('workouts', {
+  ref: 'Workout',
+  localField: '_id',
+  foreignField: 'trainer',
+  justOne: false,
 });
 
 module.exports = mongoose.model('Trainer', TrainerSchema);
