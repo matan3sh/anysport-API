@@ -30,7 +30,7 @@ const workouts = JSON.parse(
 const importData = async () => {
   try {
     await Trainer.create(trainers);
-    await Workout.create(workouts);
+    // await Workout.create(workouts);
     console.log('Data Imported...'.green.inverse);
     process.exit();
   } catch (error) {

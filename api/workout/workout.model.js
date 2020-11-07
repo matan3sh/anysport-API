@@ -36,4 +36,37 @@ const WorkoutSchema = new mongoose.Schema(
   }
 );
 
+// Static method to get avg of workout price
+WorkoutSchema.statics.getAverageCost = async function (trainerId) {
+  console.log('Calculating average cost');
+  const obj = await this.aggregate([
+    {
+      $match: { trainer: trainerId },
+    },
+    {
+      $group: {
+        _id: '$trainer',
+        averageCost: { $avg: '$price' },
+      },
+    },
+  ]);
+  try {
+    await this.model('Trainer').findByIdAndUpdate(trainerId, {
+      averageCost: Math.ceil(obj[0].averageCost / 10) * 10,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Call getAverageCost after save
+WorkoutSchema.post('save', async function () {
+  await this.constructor.getAverageCost(this.trainer);
+});
+
+// Call getAverageCost before remove
+WorkoutSchema.post('remove', async function () {
+  await this.constructor.getAverageCost(this.trainer);
+});
+
 module.exports = mongoose.model('Workout', WorkoutSchema);
