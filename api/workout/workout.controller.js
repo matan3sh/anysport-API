@@ -3,25 +3,14 @@ const Workout = require('./workout.model');
 const Trainer = require('../trainer/trainer.model');
 
 getWorkouts = async (req, res, next) => {
-  let query;
-  if (req.params.trainerId)
-    query = Workout.find({ trainer: req.params.trainerId });
-  else
-    query = Workout.find().populate({
-      path: 'trainer',
-      select: 'name description',
-    });
-  const workouts = await query;
-  if (!workouts.length)
-    return next(
-      new ErrorResponse(
-        `Workouts not found for trainer with an id of ${req.params.trainerId}`,
-        404
-      )
-    );
-  res
-    .status(200)
-    .json({ success: true, count: workouts.length, data: workouts });
+  if (req.params.trainerId) {
+    const workouts = await Workout.find({ trainer: req.params.trainerId });
+    return res
+      .status(200)
+      .json({ success: true, count: workouts.length, data: workouts });
+  } else {
+    res.status(200).json(res.advancedResults);
+  }
 };
 
 const getWorkout = async (req, res, next) => {

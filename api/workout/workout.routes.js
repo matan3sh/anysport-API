@@ -7,13 +7,22 @@ const {
   updateWorkout,
   deleteWorkout,
 } = require('./workout.controller');
+const Workout = require('./workout.model');
+const advancedResults = require('../../middleware/advancedResults');
 const router = express.Router({ mergeParams: true });
 
 // @desc Get all workouts
 // @route GET /api/v1/workouts
 // @route GET /api/v1/trainers/:trainerId/workouts
 // @access Public
-router.get('/', asyncHandler(getWorkouts));
+router.get(
+  '/',
+  advancedResults(Workout, {
+    path: 'trainer',
+    select: 'name description',
+  }),
+  asyncHandler(getWorkouts)
+);
 
 // @desc Add workout
 // @route POST /api/v1/trainers/:trainerId/workouts

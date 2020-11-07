@@ -9,6 +9,8 @@ const {
   getTrainersInRadius,
   trainerPhotoUpload,
 } = require('./trainer.controller');
+const advancedResults = require('../../middleware/advancedResults');
+const Trainer = require('./trainer.model');
 
 // Include other resource routers
 const workoutRouter = require('../workout/workout.routes');
@@ -21,7 +23,11 @@ router.use('/:trainerId/workouts', workoutRouter);
 // @desc Get all trainers
 // @route GET /api/v1/trainers
 // @access Public
-router.get('/', asyncHandler(getTrainers));
+router.get(
+  '/',
+  advancedResults(Trainer, 'workouts'),
+  asyncHandler(getTrainers)
+);
 
 // @desc Add trainer
 // @route POST /api/v1/trainers
