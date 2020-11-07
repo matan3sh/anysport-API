@@ -1,0 +1,29 @@
+[
+  {
+    "title": "30min cardio workout",
+    "description": "Fun workout in 30min duration, good vibes.",
+    "duration": 30,
+    "price": 79,
+    "minimumSkill": "Beginner",
+    "zoomlink": "",
+    "trainer": "5fa57fb35338884963909e99"
+  },
+  {
+    "title": "Heavy weight workout",
+    "description": "Hard and Heavy workout in the gym, get ready for gains.",
+    "duration": 60,
+    "price": 99,
+    "minimumSkill": "Advanced",
+    "zoomlink": "",
+    "trainer": "5fa57fb35338884963909e9b"
+  },
+  {
+    "title": "Start the day with crossfit",
+    "description": "Wake up with functional workout session for your body.",
+    "duration": 45,
+    "price": 49,
+    "minimumSkill": "Intermediate",
+    "zoomlink": "",
+    "trainer": "5fa57fb35338884963909e9a"
+  }
+]

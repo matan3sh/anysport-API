@@ -8,7 +8,14 @@ const {
   deleteTrainer,
   getTrainersInRadius,
 } = require('./trainer.controller');
+
+// Include other resource routers
+const workoutRouter = require('../workout/workout.routes');
+
 const router = express.Router();
+
+// Re-route into other resource routers
+router.use('/:trainerId/workouts', workoutRouter);
 
 // @desc Get all trainers
 // @route GET /api/v1/trainers
