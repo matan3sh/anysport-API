@@ -1,3 +1,4 @@
+const path = require('path');
 const ErrorResponse = require('../../utils/errorResponse');
 const geocoder = require('../../utils/geocoder');
 const Trainer = require('./trainer.model');
@@ -112,6 +113,41 @@ getTrainersInRadius = async (req, res, next) => {
     .json({ success: true, count: trainers.length, data: trainers });
 };
 
+trainerPhotoUpload = async (req, res, next) => {
+  const trainer = await Trainer.findById(req.params.id);
+  if (!trainer)
+    return next(
+      new ErrorResponse(`Trainer not found with id of ${req.params.id}`, 404)
+    );
+  if (!req.files) return next(new ErrorResponse(`Please upload a file`, 400));
+  const file = req.files.file;
+
+  // Make sure the image is a photo
+  if (!file.mimetype.startsWith('image'))
+    return next(new ErrorResponse(`Please upload an image file`, 400));
+
+  // Check file size
+  if (file.size > process.env.MAX_FILE_UPLOAD)
+    return next(
+      new ErrorResponse(
+        `Please upload an image less then ${process.env.MAX_FILE_UPLOAD}bytes`,
+        400
+      )
+    );
+
+  // Create custom filename
+  file.name = `${trainer._id}_photo${path.parse(file.name).ext}`;
+
+  file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (err) => {
+    if (err) {
+      console.error(err);
+      return next(new ErrorResponse(`Problem with file upload`, 500));
+    }
+    await Trainer.findByIdAndUpdate(req.params.id, { photo: file.name });
+    res.status(200).json({ success: true, data: file.name });
+  });
+};
+
 module.exports = {
   getTrainers,
   getTrainer,
@@ -119,4 +155,5 @@ module.exports = {
   updateTrainer,
   deleteTrainer,
   getTrainersInRadius,
+  trainerPhotoUpload,
 };

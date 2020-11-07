@@ -38,7 +38,6 @@ const WorkoutSchema = new mongoose.Schema(
 
 // Static method to get avg of workout price
 WorkoutSchema.statics.getAverageCost = async function (trainerId) {
-  console.log('Calculating average cost');
   const obj = await this.aggregate([
     {
       $match: { trainer: trainerId },

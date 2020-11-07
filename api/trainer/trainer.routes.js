@@ -7,6 +7,7 @@ const {
   updateTrainer,
   deleteTrainer,
   getTrainersInRadius,
+  trainerPhotoUpload,
 } = require('./trainer.controller');
 
 // Include other resource routers
@@ -46,5 +47,10 @@ router.delete('/:id', asyncHandler(deleteTrainer));
 // @route GET /api/v1/trainers/radius/:zipcode/:distance
 // @access Private
 router.get('/radius/:zipcode/:distance', asyncHandler(getTrainersInRadius));
+
+// @desc Upload photo for trainer
+// @route PUT /api/v1/trainers/:id/photo
+// @access Private
+router.put('/:id/photo', asyncHandler(trainerPhotoUpload));
 
 module.exports = router;
