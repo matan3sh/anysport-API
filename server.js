@@ -31,6 +31,8 @@ const trainersRoutes = require('./api/trainer/trainer.routes');
 app.use('/api/v1/trainers', trainersRoutes);
 const workoutsRoutes = require('./api/workout/workout.routes');
 app.use('/api/v1/workouts', workoutsRoutes);
+const authRoutes = require('./api/auth/auth.routes');
+app.use('/api/v1/auth', authRoutes);
 
 // Custom ErrorHandler
 app.use(errorHandler);
