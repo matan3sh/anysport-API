@@ -10,7 +10,7 @@ const {
   trainerPhotoUpload,
 } = require('./trainer.controller');
 const advancedResults = require('../../middleware/advancedResults');
-const { protect } = require('../../middleware/auth');
+const { protect, authorize } = require('../../middleware/auth');
 const Trainer = require('./trainer.model');
 
 // Include other resource routers
@@ -33,7 +33,12 @@ router.get(
 // @desc Add trainer
 // @route POST /api/v1/trainers
 // @access Private
-router.post('/', protect, asyncHandler(addTrainer));
+router.post(
+  '/',
+  protect,
+  authorize('publisher', 'admin'),
+  asyncHandler(addTrainer)
+);
 
 // @desc Get single trainer
 // @route GET /api/v1/trainers/:id
@@ -43,12 +48,22 @@ router.get('/:id', asyncHandler(getTrainer));
 // @desc Update trainer
 // @route PUT /api/v1/trainers/:id
 // @access Private
-router.put('/:id', protect, asyncHandler(updateTrainer));
+router.put(
+  '/:id',
+  protect,
+  authorize('publisher', 'admin'),
+  asyncHandler(updateTrainer)
+);
 
 // @desc Delete trainer
 // @route DELETE /api/v1/trainers/:id
 // @access Private
-router.delete('/:id', protect, asyncHandler(deleteTrainer));
+router.delete(
+  '/:id',
+  protect,
+  authorize('publisher', 'admin'),
+  asyncHandler(deleteTrainer)
+);
 
 // @desc Get trainers within a radius
 // @route GET /api/v1/trainers/radius/:zipcode/:distance
@@ -58,6 +73,11 @@ router.get('/radius/:zipcode/:distance', asyncHandler(getTrainersInRadius));
 // @desc Upload photo for trainer
 // @route PUT /api/v1/trainers/:id/photo
 // @access Private
-router.put('/:id/photo', protect, asyncHandler(trainerPhotoUpload));
+router.put(
+  '/:id/photo',
+  protect,
+  authorize('publisher', 'admin'),
+  asyncHandler(trainerPhotoUpload)
+);
 
 module.exports = router;
