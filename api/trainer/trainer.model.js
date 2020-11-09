@@ -82,11 +82,11 @@ const TrainerSchema = new mongoose.Schema(
       type: String,
       default: 'no-photo.jpg',
     },
-    // user: {
-    //   type: mongoose.Schema.ObjectId,
-    //   ref: 'User',
-    //   required: true,
-    // },
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      required: true,
+    },
   },
   {
     toJSON: { virtuals: true },

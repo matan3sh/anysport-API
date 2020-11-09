@@ -17,6 +17,15 @@ getTrainer = async (req, res, next) => {
 };
 
 addTrainer = async (req, res, next) => {
+  req.body.user = req.user.id;
+  const publishedTrainer = await Trainer.findOne({ user: req.user.id });
+  if (publishedTrainer && req.user.role !== 'admin')
+    return next(
+      new ErrorResponse(
+        `The user with ID ${req.user.id} has already published a trainer`,
+        400
+      )
+    );
   const trainer = await Trainer.create(req.body);
   res.status(201).json({ success: true, data: trainer });
 };
