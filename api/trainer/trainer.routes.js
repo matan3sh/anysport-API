@@ -10,6 +10,7 @@ const {
   trainerPhotoUpload,
 } = require('./trainer.controller');
 const advancedResults = require('../../middleware/advancedResults');
+const { protect } = require('../../middleware/auth');
 const Trainer = require('./trainer.model');
 
 // Include other resource routers
@@ -32,7 +33,7 @@ router.get(
 // @desc Add trainer
 // @route POST /api/v1/trainers
 // @access Private
-router.post('/', asyncHandler(addTrainer));
+router.post('/', protect, asyncHandler(addTrainer));
 
 // @desc Get single trainer
 // @route GET /api/v1/trainers/:id
@@ -42,21 +43,21 @@ router.get('/:id', asyncHandler(getTrainer));
 // @desc Update trainer
 // @route PUT /api/v1/trainers/:id
 // @access Private
-router.put('/:id', asyncHandler(updateTrainer));
+router.put('/:id', protect, asyncHandler(updateTrainer));
 
 // @desc Delete trainer
 // @route DELETE /api/v1/trainers/:id
 // @access Private
-router.delete('/:id', asyncHandler(deleteTrainer));
+router.delete('/:id', protect, asyncHandler(deleteTrainer));
 
 // @desc Get trainers within a radius
 // @route GET /api/v1/trainers/radius/:zipcode/:distance
-// @access Private
+// @access Public
 router.get('/radius/:zipcode/:distance', asyncHandler(getTrainersInRadius));
 
 // @desc Upload photo for trainer
 // @route PUT /api/v1/trainers/:id/photo
 // @access Private
-router.put('/:id/photo', asyncHandler(trainerPhotoUpload));
+router.put('/:id/photo', protect, asyncHandler(trainerPhotoUpload));
 
 module.exports = router;

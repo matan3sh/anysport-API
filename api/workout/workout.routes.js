@@ -9,6 +9,7 @@ const {
 } = require('./workout.controller');
 const Workout = require('./workout.model');
 const advancedResults = require('../../middleware/advancedResults');
+const { protect } = require('../../middleware/auth');
 const router = express.Router({ mergeParams: true });
 
 // @desc Get all workouts
@@ -27,7 +28,7 @@ router.get(
 // @desc Add workout
 // @route POST /api/v1/trainers/:trainerId/workouts
 // @access Private
-router.post('/', asyncHandler(addWorkout));
+router.post('/', protect, asyncHandler(addWorkout));
 
 // @desc Get single workout
 // @route GET /api/v1/workouts/:id
@@ -37,11 +38,11 @@ router.get('/:id', asyncHandler(getWorkout));
 // @desc Update workout
 // @route PUT /api/v1/workouts/:id
 // @access Private
-router.put('/:id', asyncHandler(updateWorkout));
+router.put('/:id', protect, asyncHandler(updateWorkout));
 
 // @desc Delete workout
 // @route DELETE /api/v1/workouts/:id
 // @access Private
-router.delete('/:id', asyncHandler(deleteWorkout));
+router.delete('/:id', protect, asyncHandler(deleteWorkout));
 
 module.exports = router;

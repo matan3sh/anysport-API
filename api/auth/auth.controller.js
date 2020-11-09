@@ -18,6 +18,11 @@ login = async (req, res, next) => {
   _sendTokenResponse(user, 200, res);
 };
 
+getLoggedInUser = async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+  res.status(200).json({ success: true, data: user });
+};
+
 // Get token from model, create cookie and send respose
 const _sendTokenResponse = (user, statusCode, res) => {
   const token = user.getSignedJwtToken();
@@ -37,4 +42,5 @@ const _sendTokenResponse = (user, statusCode, res) => {
 module.exports = {
   register,
   login,
+  getLoggedInUser,
 };

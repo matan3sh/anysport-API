@@ -1,6 +1,7 @@
 const express = require('express');
 const asyncHandler = require('../../middleware/async');
-const { register, login } = require('./auth.controller');
+const { register, login, getLoggedInUser } = require('./auth.controller');
+const { protect } = require('../../middleware/auth');
 
 const router = express.Router();
 
@@ -13,5 +14,10 @@ router.post('/register', asyncHandler(register));
 // @route POST /api/v1/auth/login
 // @access Public
 router.post('/login', asyncHandler(login));
+
+// @desc Get logged in user
+// @route GET /api/v1/auth/me
+// @access Private
+router.get('/me', protect, asyncHandler(getLoggedInUser));
 
 module.exports = router;
