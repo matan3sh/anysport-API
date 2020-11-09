@@ -30,12 +30,20 @@ const getWorkout = async (req, res, next) => {
 
 const addWorkout = async (req, res, next) => {
   req.body.trainer = req.params.trainerId;
+  req.body.user = req.user.id;
   const trainer = await Trainer.findById(req.params.trainerId);
   if (!trainer)
     return next(
       new ErrorResponse(
         `No trainer with the id of ${req.params.trainerId}`,
         404
+      )
+    );
+  if (trainer.user.toString() !== req.user.id && req.user.role !== 'admin')
+    return next(
+      new ErrorResponse(
+        `User ${req.user.id} is not authorized to add a workout to this trainer ${trainer._id}`,
+        401
       )
     );
   const workout = await Workout.create(req.body);
@@ -46,7 +54,14 @@ const updateWorkout = async (req, res, next) => {
   let workout = await Workout.findById(req.params.id);
   if (!workout)
     return next(
-      new ErrorResponse(`No trainer with the id of ${req.params.id}`, 404)
+      new ErrorResponse(`No workout with the id of ${req.params.id}`, 404)
+    );
+  if (workout.user.toString() !== req.user.id && req.user.role !== 'admin')
+    return next(
+      new ErrorResponse(
+        `User ${req.user.id} is not authorized to update a workout ${workout._id}`,
+        401
+      )
     );
   workout = await Workout.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
@@ -60,6 +75,13 @@ const deleteWorkout = async (req, res, next) => {
   if (!workout)
     return next(
       new ErrorResponse(`No workout with the id of ${req.params.id}`, 404)
+    );
+  if (workout.user.toString() !== req.user.id && req.user.role !== 'admin')
+    return next(
+      new ErrorResponse(
+        `User ${req.user.id} is not authorized to delete a workout ${workout._id}`,
+        401
+      )
     );
   await Workout.deleteOne();
   res.status(200).json({ success: true, data: {} });
