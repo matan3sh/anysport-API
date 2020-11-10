@@ -5,6 +5,7 @@ const {
   login,
   getLoggedInUser,
   forgotPassword,
+  resetPassword,
 } = require('./auth.controller');
 const { protect } = require('../../middleware/auth');
 
@@ -29,5 +30,10 @@ router.get('/me', protect, asyncHandler(getLoggedInUser));
 // @route GET /api/v1/auth/forgotpassword
 // @access Public
 router.post('/forgotpassword', asyncHandler(forgotPassword));
+
+// @desc Reset password
+// @route PUT /api/v1/auth/resetpassword/:resetToken
+// @access Public
+router.put('/resetpassword/:resetToken', asyncHandler(resetPassword));
 
 module.exports = router;
