@@ -1,6 +1,11 @@
 const express = require('express');
 const asyncHandler = require('../../middleware/async');
-const { register, login, getLoggedInUser } = require('./auth.controller');
+const {
+  register,
+  login,
+  getLoggedInUser,
+  forgotPassword,
+} = require('./auth.controller');
 const { protect } = require('../../middleware/auth');
 
 const router = express.Router();
@@ -19,5 +24,10 @@ router.post('/login', asyncHandler(login));
 // @route GET /api/v1/auth/me
 // @access Private
 router.get('/me', protect, asyncHandler(getLoggedInUser));
+
+// @desc Forgot password
+// @route GET /api/v1/auth/forgotpassword
+// @access Public
+router.post('/forgotpassword', asyncHandler(forgotPassword));
 
 module.exports = router;
