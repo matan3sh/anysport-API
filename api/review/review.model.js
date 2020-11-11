@@ -34,4 +34,7 @@ const ReviewSchema = new mongoose.Schema(
   }
 );
 
+// Prevent user from submitting more then one review per trainer
+ReviewSchema.index({ trainer: 1, user: 1 }, { unique: true });
+
 module.exports = mongoose.model('Review', ReviewSchema);

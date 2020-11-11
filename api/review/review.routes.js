@@ -25,8 +25,8 @@ router.get(
 router.get('/:id', asyncHandler(getReview));
 
 // @desc Add review
-// @route GET /api/v1/reviews
+// @route POST /api/v1/trainers/:trainerId/reviews
 // @access Private
-router.get('/', asyncHandler(addReview));
+router.post('/', protect, authorize('user', 'admin'), asyncHandler(addReview));
 
 module.exports = router;
