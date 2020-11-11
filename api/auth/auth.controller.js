@@ -97,4 +97,5 @@ module.exports = {
   getLoggedInUser,
   forgotPassword,
   resetPassword,
+  _sendTokenResponse,
 };
