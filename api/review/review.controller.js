@@ -12,6 +12,22 @@ getReviews = async (req, res, next) => {
   }
 };
 
+getReview = async (req, res, next) => {
+  const review = await Review.findById(req.params.id).populate({
+    path: 'trainer',
+    select: 'name description',
+  });
+  if (!review)
+    return next(
+      new ErrorResponse(`Review not found with id of ${req.params.id}`, 404)
+    );
+  res.status(200).json({ success: true, data: review });
+};
+
+addReview = async (req, res, next) => {};
+
 module.exports = {
   getReviews,
+  getReview,
+  addReview,
 };

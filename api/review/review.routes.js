@@ -1,6 +1,6 @@
 const express = require('express');
 const asyncHandler = require('../../middleware/async');
-const { getReviews } = require('./review.controller');
+const { getReviews, getReview, addReview } = require('./review.controller');
 
 const advancedResults = require('../../middleware/advancedResults');
 const { protect, authorize } = require('../../middleware/auth');
@@ -18,5 +18,15 @@ router.get(
   advancedResults(Review, { path: 'trainer', select: 'name description' }),
   asyncHandler(getReviews)
 );
+
+// @desc Get single review
+// @route GET /api/v1/reviews/:id
+// @access Public
+router.get('/:id', asyncHandler(getReview));
+
+// @desc Add review
+// @route GET /api/v1/reviews
+// @access Private
+router.get('/', asyncHandler(addReview));
 
 module.exports = router;
