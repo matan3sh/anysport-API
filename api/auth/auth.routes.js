@@ -6,6 +6,7 @@ const {
   getLoggedInUser,
   forgotPassword,
   resetPassword,
+  logout,
 } = require('./auth.controller');
 const { protect } = require('../../middleware/auth');
 
@@ -20,6 +21,11 @@ router.post('/register', asyncHandler(register));
 // @route POST /api/v1/auth/login
 // @access Public
 router.post('/login', asyncHandler(login));
+
+// @desc Logout user / clear cookie
+// @route GET /api/v1/auth/logout
+// @access Private
+router.get('/logout', protect, asyncHandler(logout));
 
 // @desc Get logged in user
 // @route GET /api/v1/auth/me
