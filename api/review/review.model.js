@@ -52,7 +52,7 @@ ReviewSchema.statics.getAverageRating = async function (trainerId) {
   ]);
   try {
     await this.model('Trainer').findByIdAndUpdate(trainerId, {
-      averageRating: obj[0].averageRating,
+      averageRating: obj.length > 0 ? obj[0].averageRating : 0,
     });
   } catch (error) {
     console.error(error);
