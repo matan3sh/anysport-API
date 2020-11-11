@@ -39,6 +39,8 @@ const authRoutes = require('./api/auth/auth.routes');
 app.use('/api/v1/auth', authRoutes);
 const userRoutes = require('./api/user/user.routes');
 app.use('/api/v1/users', userRoutes);
+const adminRoutes = require('./api/admin/admin.routes');
+app.use('/api/v1/admin', adminRoutes);
 
 // Custom ErrorHandler
 app.use(errorHandler);
