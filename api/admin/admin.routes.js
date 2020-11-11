@@ -8,6 +8,6 @@ const router = express.Router();
 // @desc Gel all users
 // @route PUT /api/v1/admin
 // @access Private
-router.put('/', protect, asyncHandler(getUsers));
+router.get('/', protect, asyncHandler(getUsers));
 
 module.exports = router;
