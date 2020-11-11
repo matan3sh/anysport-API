@@ -7,9 +7,12 @@ const {
   updateWorkout,
   deleteWorkout,
 } = require('./workout.controller');
-const Workout = require('./workout.model');
+
 const advancedResults = require('../../middleware/advancedResults');
 const { protect, authorize } = require('../../middleware/auth');
+
+const Workout = require('./workout.model');
+
 const router = express.Router({ mergeParams: true });
 
 // @desc Get all workouts

@@ -41,6 +41,8 @@ const userRoutes = require('./api/user/user.routes');
 app.use('/api/v1/users', userRoutes);
 const adminRoutes = require('./api/admin/admin.routes');
 app.use('/api/v1/admin', adminRoutes);
+const reviewRoutes = require('./api/review/review.routes');
+app.use('/api/v1/reviews', reviewRoutes);
 
 // Custom ErrorHandler
 app.use(errorHandler);

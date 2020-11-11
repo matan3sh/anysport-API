@@ -15,11 +15,13 @@ const Trainer = require('./trainer.model');
 
 // Include other resource routers
 const workoutRouter = require('../workout/workout.routes');
+const reviewRouter = require('../review/review.routes');
 
 const router = express.Router();
 
 // Re-route into other resource routers
 router.use('/:trainerId/workouts', workoutRouter);
+router.use('/:trainerId/reviews', reviewRouter);
 
 // @desc Get all trainers
 // @route GET /api/v1/trainers
